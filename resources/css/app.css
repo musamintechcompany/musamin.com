@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none;
+}
+/* Very small scrollbar for chat container */
+#messagesContainer::-webkit-scrollbar {
+    width: 2px;
+}
+
+#messagesContainer::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#messagesContainer::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 1px;
+}
+
+#messagesContainer::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* For Firefox */
+#messagesContainer {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}

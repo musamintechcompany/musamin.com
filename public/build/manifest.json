@@ -1,0 +1,44 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-DO5EJ2Rq.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/css/auth/login.css": {
+    "file": "assets/login-BG2kmCcf.css",
+    "src": "resources/css/auth/login.css",
+    "isEntry": true,
+    "names": [
+      "login.css"
+    ]
+  },
+  "resources/css/auth/register.css": {
+    "file": "assets/register-BShgqRUY.css",
+    "src": "resources/css/auth/register.css",
+    "isEntry": true,
+    "names": [
+      "register.css"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-BqhFswnp.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/auth/login.js": {
+    "file": "assets/login-CBPQHWdv.js",
+    "name": "login",
+    "src": "resources/js/auth/login.js",
+    "isEntry": true
+  },
+  "resources/js/auth/register.js": {
+    "file": "assets/register-DUQoHJ37.js",
+    "name": "register",
+    "src": "resources/js/auth/register.js",
+    "isEntry": true
+  }
+}
