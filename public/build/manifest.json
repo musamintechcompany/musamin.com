@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-DO5EJ2Rq.css",
+    "file": "assets/app-BG_4Upz-.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "names": [
@@ -8,7 +8,7 @@
     ]
   },
   "resources/css/auth/login.css": {
-    "file": "assets/login-BG2kmCcf.css",
+    "file": "assets/login-Bk5peceZ.css",
     "src": "resources/css/auth/login.css",
     "isEntry": true,
     "names": [
@@ -16,7 +16,7 @@
     ]
   },
   "resources/css/auth/register.css": {
-    "file": "assets/register-BShgqRUY.css",
+    "file": "assets/register-DPc0q674.css",
     "src": "resources/css/auth/register.css",
     "isEntry": true,
     "names": [
@@ -24,10 +24,13 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-BqhFswnp.js",
+    "file": "assets/app-BBrYHaT5.js",
     "name": "app",
     "src": "resources/js/app.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "resources/js/echo.js"
+    ]
   },
   "resources/js/auth/login.js": {
     "file": "assets/login-CBPQHWdv.js",
@@ -39,6 +42,12 @@
     "file": "assets/register-DUQoHJ37.js",
     "name": "register",
     "src": "resources/js/auth/register.js",
+    "isEntry": true
+  },
+  "resources/js/echo.js": {
+    "file": "assets/echo-XDOwWbCQ.js",
+    "name": "echo",
+    "src": "resources/js/echo.js",
     "isEntry": true
   }
 }
