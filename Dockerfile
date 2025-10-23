@@ -25,19 +25,30 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www
 
-# Copy existing application directory contents
-COPY . /var/www
+# Copy composer files first
+COPY composer.json composer.lock ./
 
-# Copy existing application directory permissions
-COPY --chown=www-data:www-data . /var/www
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-# Install dependencies
-RUN composer install --no-dev --optimize-autoloader
-RUN npm ci && npm run build
+# Copy package.json files
+COPY package*.json ./
+
+# Install Node dependencies
+RUN npm ci
+
+# Copy application code
+COPY . .
+
+# Build assets
+RUN npm run build
 
 # Set proper permissions
 RUN chown -R www-data:www-data /var/www
 RUN chmod -R 755 /var/www/storage /var/www/bootstrap/cache
+
+# Make sure artisan is executable
+RUN chmod +x /var/www/artisan
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
