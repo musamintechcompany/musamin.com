@@ -39,7 +39,7 @@
                 <h5 class="mb-6 text-lg font-semibold text-white">Explore</h5>
                 <ul class="space-y-3">
                     <li><a href="{{ route('home') }}" class="text-gray-300 transition-colors duration-200 opacity-75 hover:text-white">Home</a></li>
-                    <li><a href="{{ route('marketplace') }}" class="text-gray-300 transition-colors duration-200 opacity-75 hover:text-white">Marketplace</a></li>
+                    <li><a href="{{ route('market-place.index') }}" class="text-gray-300 transition-colors duration-200 opacity-75 hover:text-white">Marketplace</a></li>
                     <li><a href="{{ route('how-it-works') }}" class="text-gray-300 transition-colors duration-200 opacity-75 hover:text-white">How It Works</a></li>
                     <li><a href="{{ route('testimonials') }}" class="text-gray-300 transition-colors duration-200 opacity-75 hover:text-white">Testimonials</a></li>
                     <li><a href="{{ route('contact') }}" class="text-gray-300 transition-colors duration-200 opacity-75 hover:text-white">Contact Us</a></li>
