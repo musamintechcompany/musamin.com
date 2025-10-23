@@ -35,8 +35,9 @@ COPY --chown=www-data:www-data . /var/www
 RUN composer install --no-dev --optimize-autoloader
 RUN npm ci && npm run build
 
-# Change current user to www
-USER www-data
+# Set proper permissions
+RUN chown -R www-data:www-data /var/www
+RUN chmod -R 755 /var/www/storage /var/www/bootstrap/cache
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
