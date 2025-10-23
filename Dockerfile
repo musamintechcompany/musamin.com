@@ -1,7 +1,7 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.2-apache
 
 # Install system dependencies
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y \
     git \
     curl \
     libpng-dev \
@@ -10,10 +10,11 @@ RUN apk add --no-cache \
     unzip \
     nodejs \
     npm \
-    freetype-dev \
-    libjpeg-turbo-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
     libwebp-dev \
-    oniguruma-dev
+    libonig-dev \
+    supervisor
 
 # Configure and install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
@@ -22,8 +23,11 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Enable Apache mod_rewrite
+RUN a2enmod rewrite
+
 # Set working directory
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 # Copy composer files first
 COPY composer.json composer.lock ./
@@ -44,12 +48,20 @@ COPY . .
 RUN npm run build
 
 # Set proper permissions
-RUN chown -R www-data:www-data /var/www
-RUN chmod -R 755 /var/www/storage /var/www/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html
+RUN chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Make sure artisan is executable
-RUN chmod +x /var/www/artisan
+RUN chmod +x /var/www/html/artisan
 
-# Expose port 9000 and start php-fpm server
-EXPOSE 9000
-CMD ["php-fpm"]
+# Configure Apache
+COPY docker/apache/default.conf /etc/apache2/sites-available/000-default.conf
+
+# Copy supervisor config
+COPY docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Expose port 80
+EXPOSE 80
+
+# Start supervisor
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
