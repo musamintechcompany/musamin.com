@@ -1,7 +1,7 @@
 @php
     $navLinks = [
         ['label' => 'Home', 'route' => 'home'],
-        ['label' => 'Marketplace', 'route' => 'marketplace'],
+        ['label' => 'Marketplace', 'route' => 'market-place.index'],
         ['label' => 'How It Works', 'route' => 'how-it-works'],
         ['label' => 'Testimonials', 'route' => 'testimonials'],
         ['label' => 'Contact Us', 'route' => 'contact'],
