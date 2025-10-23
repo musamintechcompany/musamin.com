@@ -25,35 +25,47 @@ services:
     networks:
       - musamin
 
-  db:
-    image: mysql:8.0
-    container_name: musamin-db
+  reverb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: musamin-reverb
     restart: unless-stopped
-    environment:
-      MYSQL_DATABASE: musamin
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_PASSWORD: password
-      MYSQL_USER: musamin
-    volumes:
-      - dbdata:/var/lib/mysql
+    working_dir: /var/www
+    command: php artisan reverb:start --host=0.0.0.0 --port=8080
     ports:
-      - "3306:3306"
+      - "8080:8080"
+    volumes:
+      - ./:/var/www
     networks:
       - musamin
 
-  redis:
-    image: redis:alpine
-    container_name: musamin-redis
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: musamin-queue
     restart: unless-stopped
-    ports:
-      - "6379:6379"
+    working_dir: /var/www
+    command: php artisan queue:work redis --sleep=3 --tries=3
+    volumes:
+      - ./:/var/www
+    networks:
+      - musamin
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: musamin-scheduler
+    restart: unless-stopped
+    working_dir: /var/www
+    command: php artisan schedule:work
+    volumes:
+      - ./:/var/www
     networks:
       - musamin
 
 networks:
   musamin:
     driver: bridge
-
-volumes:
-  dbdata:
-    driver: local

@@ -28,7 +28,7 @@ COPY --chown=www-data:www-data . /var/www
 
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
-RUN npm install && npm run build
+RUN npm ci && npm run build
 
 # Change current user to www
 USER www-data
