@@ -32,9 +32,9 @@ services:
     container_name: musamin-reverb
     restart: unless-stopped
     working_dir: /var/www
-    command: php /var/www/artisan reverb:start --host=0.0.0.0 --port=8080
+    command: php /var/www/artisan reverb:start --host=0.0.0.0 --port=8081
     ports:
-      - "8080:8080"
+      - "8081:8081"
     volumes:
       - ./:/var/www
     networks:
