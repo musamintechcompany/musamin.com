@@ -8,8 +8,6 @@ services:
     container_name: musamin-app
     restart: unless-stopped
     working_dir: /var/www
-    volumes:
-      - ./:/var/www
     networks:
       - musamin
 
@@ -20,8 +18,9 @@ services:
     ports:
       - "3000:80"
     volumes:
-      - ./:/var/www
       - ./docker/nginx:/etc/nginx/conf.d
+    volumes_from:
+      - app
     networks:
       - musamin
 
@@ -35,8 +34,6 @@ services:
     command: php /var/www/artisan reverb:start --host=0.0.0.0 --port=8081
     ports:
       - "8081:8081"
-    volumes:
-      - ./:/var/www
     networks:
       - musamin
 
@@ -48,8 +45,6 @@ services:
     restart: unless-stopped
     working_dir: /var/www
     command: php /var/www/artisan queue:work redis --sleep=3 --tries=3
-    volumes:
-      - ./:/var/www
     networks:
       - musamin
 
@@ -61,8 +56,6 @@ services:
     restart: unless-stopped
     working_dir: /var/www
     command: php /var/www/artisan schedule:work
-    volumes:
-      - ./:/var/www
     networks:
       - musamin
 
