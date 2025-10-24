@@ -171,7 +171,7 @@
                         <div class="h-1 rounded-full bg-[#23384a] overflow-hidden my-1.5">
                             <div class="h-full {{ $style['width'] }} bg-gradient-to-r {{ $style['progress'] }}"></div>
                         </div>
-                        <div class="text-[#b8c1cc] text-[9px] opacity-90">${{ number_format($order->total_amount) }}</div>
+                        <div class="text-[#b8c1cc] text-[9px] opacity-90">${{ number_format((float)($order->total_amount ?? 0), 2) }}</div>
                     </a>
                 @endforeach
                 

@@ -21,7 +21,7 @@
         <script>
             window.Laravel = {
                 csrfToken: '{{ csrf_token() }}',
-                userId: {{ auth()->check() ? auth()->id() : 'null' }}
+                userId: {{ auth()->check() ? "'" . auth()->id() . "'" : 'null' }}
             };
         </script>
 
