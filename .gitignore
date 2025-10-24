@@ -1,7 +1,9 @@
 /vendor/
 /node_modules/
 /public/hot
-/public/storage
+/public/storage/*
+!/public/storage/logos/
+!/public/sounds/
 /storage/*.key
 /storage/app/public/*
 !/storage/app/public/.gitkeep
