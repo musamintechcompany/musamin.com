@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 
-# Install system dependencies
+# Install system dependencies (INCLUDING SUPERVISOR)
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libwebp-dev \
-    libonig-dev
+    libonig-dev \
+    supervisor
 
 # Configure and install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
@@ -25,8 +26,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Configure Apache
-COPY docker/apache/default.conf /etc/apache2/sites-available/000-default.conf
+# Create supervisor log directory
+RUN mkdir -p /var/log/supervisor
 
 # Set working directory
 WORKDIR /var/www/html
@@ -49,10 +50,20 @@ COPY . .
 # Build assets
 RUN npm run build
 
+# Copy Apache configuration
+COPY docker/apache/default.conf /etc/apache2/sites-available/000-default.conf
+
+# Copy supervisor config
+COPY docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 # Set proper permissions
 RUN chown -R www-data:www-data /var/www/html
 RUN chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod +x /var/www/html/artisan
 
+# Expose ports (Apache + Reverb)
 EXPOSE 80
-CMD ["apache2-foreground"]
+EXPOSE 8081
+
+# Start supervisor (this runs ALL processes)
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
