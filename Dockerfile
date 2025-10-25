@@ -60,8 +60,18 @@ COPY docker/apache/default.conf /etc/apache2/sites-available/000-default.conf
 # Copy supervisor config
 COPY docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Expose port 80
+# Expose ports
 EXPOSE 80
+EXPOSE 8081
+
+# Add Traefik labels for WebSocket routing
+LABEL traefik.http.routers.musamin-ws.rule="Host(\`musamin.com\`) && PathPrefix(\`/ws\`)"
+LABEL traefik.http.routers.musamin-ws.entrypoints=https
+LABEL traefik.http.routers.musamin-ws.tls.certresolver=letsencrypt
+LABEL traefik.http.services.musamin-ws.loadbalancer.server.port=8081
+LABEL traefik.http.middlewares.musamin-ws.headers.customrequestheaders.Connection=upgrade
+LABEL traefik.http.middlewares.musamin-ws.headers.customrequestheaders.Upgrade=websocket
+LABEL traefik.http.routers.musamin-ws.middlewares=musamin-ws
 
 # Start supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
