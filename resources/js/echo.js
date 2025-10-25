@@ -10,7 +10,7 @@ window.Echo = new Echo({
     wsPort: import.meta.env.VITE_REVERB_PORT,
     wssPort: import.meta.env.VITE_REVERB_PORT,
     forceTLS: false,
-    wsPath: '/ws',
+
     enabledTransports: ['ws', 'wss'],
     authorizer: (channel, options) => {
         return {
